@@ -1,9 +1,15 @@
 # Publishing checklist
 
-**Status: `indian-number-kit@1.0.0` is live on npm** (`latest`, MIT, zero
+**Status: `indian-number-kit@1.0.1` is live on npm** (`latest`, MIT, zero
 dependencies) and installs cleanly in both ESM and CommonJS. The steps below
 are kept as the record of how it shipped and as the checklist for future
 releases.
+
+| Version | State |
+| --- | --- |
+| 1.0.1 | `latest` — adds the `./package.json` export |
+| 1.0.0 | live |
+| 0.0.0-stage | deprecated placeholder npm created during the first staged publish |
 
 ## What actually happened on the first release
 
@@ -16,8 +22,13 @@ releases.
 - Staged-publishing commands (`npm stage list|view|approve`) need npm CLI
   **11.15.0+**; this machine had 11.6.2, so they were run through
   `npx npm@11.15.0`.
-- `require('indian-number-kit/package.json')` is intentionally not exported;
-  only the `.` entry point is.
+- Publishing returns **202 Accepted** and the version appears a few minutes
+  later; poll `https://registry.npmjs.org/<pkg>/<version>` rather than trusting
+  the CLI line.
+- Housekeeping is constrained: `npm unpublish` is refused for tokens that
+  bypass 2FA (`E403`), while `npm deprecate` is allowed. That is how the
+  `0.0.0-stage` placeholder was retired — unpublishing it needs an interactive
+  `npm login` session.
 
 ## Already verified
 
