@@ -1,0 +1,55 @@
+name: Release
+
+# Publishes to npm when a version tag is pushed, with provenance.
+# Requires one repository secret: NPM_TOKEN (an npm Automation/granular token
+# with publish rights for indian-number-kit).
+#
+#   npm version patch|minor|major
+#   git push --follow-tags
+#
+# Nothing runs on ordinary pushes to main — that is what CI is for.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+  id-token: write # npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check the tag matches package.json
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$version" ]; then
+            echo "tag $GITHUB_REF_NAME does not match package.json version $version"
+            exit 1
+          fi
+
+      - name: Publish (prepublishOnly runs lint, types, tests and build)
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Verify the registry copy
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          npm view "indian-number-kit@$version" version
+          mkdir -p /tmp/verify && cd /tmp/verify && npm init -y --silent >/dev/null
+          npm install --silent "indian-number-kit@$version"
+          node -e "const k=require('indian-number-kit'); if (k.toCurrency(1234567.5) !== '₹12,34,567.50') process.exit(1)"
+          node --input-type=module -e "import {toCompact} from 'indian-number-kit'; if (toCompact(12500000) !== '1.25 Cr') process.exit(1)"

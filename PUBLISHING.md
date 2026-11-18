@@ -31,23 +31,40 @@ git push -u origin main
 
 ## 3. Publish — the only step left
 
-The npm CLI on this machine is not logged in (`npm whoami` returns E401), so
-this needs your credentials:
+Nothing in this repo can publish on its own: the npm token stored in `~/.npmrc`
+currently returns `E401 Unauthorized` (expired or revoked), and no `NPM_TOKEN`
+is available to the agent. Pick one of the two paths below.
+
+### Path A — publish from CI on a tag (recommended)
+
+`.github/workflows/release.yml` publishes when a `v*` tag is pushed, with
+provenance, and then verifies the registry copy.
+
+1. Create an npm **Automation** (or granular, publish-scoped) token at
+   <https://www.npmjs.com/settings/~/tokens>.
+2. Add it as a repository secret named `NPM_TOKEN`:
+   ```bash
+   gh secret set NPM_TOKEN --repo Shivala-08/the-return-of-npm
+   ```
+3. Tag the release:
+   ```bash
+   git tag v1.0.0 && git push --tags
+   ```
+
+The workflow refuses to publish if the tag does not match `package.json`.
+
+### Path B — publish from this machine
 
 ```bash
-npm login                       # 2FA prompt
+npm login                       # browser + 2FA
 npm publish                     # prepublishOnly re-runs lint, types, tests, build
 git tag v1.0.0 && git push --tags
 ```
 
-The registry name check still passes (`npm view indian-number-kit` → 404), so
-publish soon if the name matters to you.
-
 For a scoped name, use `npm publish --access public`.
 
-Publishing from GitHub Actions instead? Add `--provenance` and give the job an
-`id-token: write` permission; the `prepublishOnly` gate then runs in CI rather
-than locally.
+The registry name check still passes (`npm view indian-number-kit` → 404), so
+publish soon if the name matters to you.
 
 ## 4. Verify the published package
 
