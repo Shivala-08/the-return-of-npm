@@ -1,6 +1,6 @@
 {
   "name": "indian-number-kit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Format, convert and parse numbers in the Indian numbering system (lakh, crore).",
   "keywords": [
     "indian",
@@ -14,7 +14,10 @@
     "en-in"
   ],
   "license": "MIT",
-  "author": "Pallav",
+  "author": {
+    "name": "Pallav",
+    "url": "https://github.com/Shivala-08"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -24,7 +27,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",
@@ -32,6 +36,9 @@
     "LICENSE"
   ],
   "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=18"
   },
@@ -51,6 +58,10 @@
     "type": "git",
     "url": "git+https://github.com/Shivala-08/the-return-of-npm.git"
   },
+  "homepage": "https://github.com/Shivala-08/the-return-of-npm#readme",
+  "bugs": {
+    "url": "https://github.com/Shivala-08/the-return-of-npm/issues"
+  },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^22.9.0",
@@ -61,9 +72,5 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.4",
     "vitest": "^3.2.4"
-  },
-  "homepage": "https://github.com/Shivala-08/the-return-of-npm#readme",
-  "bugs": {
-    "url": "https://github.com/Shivala-08/the-return-of-npm/issues"
   }
 }

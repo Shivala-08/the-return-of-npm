@@ -5,8 +5,8 @@
 [![npm version](https://img.shields.io/npm/v/indian-number-kit.svg)](https://www.npmjs.com/package/indian-number-kit)
 [![npm downloads](https://img.shields.io/npm/dm/indian-number-kit.svg)](https://www.npmjs.com/package/indian-number-kit)
 [![CI](https://github.com/Shivala-08/the-return-of-npm/actions/workflows/ci.yml/badge.svg)](https://github.com/Shivala-08/the-return-of-npm/actions/workflows/ci.yml)
-[![licence](https://img.shields.io/npm/l/indian-number-kit.svg)](./LICENSE)
-[![bundle size](https://img.shields.io/badge/gzip-2.4%20kB-brightgreen.svg)](#bundle-size)
+[![licence](https://img.shields.io/npm/l/indian-number-kit.svg)](https://github.com/Shivala-08/the-return-of-npm/blob/main/LICENSE)
+[![bundle size](https://img.shields.io/badge/gzip-2.4%20kB-brightgreen.svg)](https://www.npmjs.com/package/indian-number-kit?activeTab=code)
 
 Indian readers group digits as `12,34,567`, not `1,234,567`, and they say
 "Twelve Lakh Thirty-Four Thousand Five Hundred Sixty-Seven". This package does
@@ -195,6 +195,8 @@ integerToWords(1234567n);     // "Twelve Lakh Thirty-Four Thousand Five Hundred 
 
 `npm run size` enforces the budget in CI (3 kB gzipped, 6 kB minified).
 
+`require('indian-number-kit/package.json')` also resolves, for tooling that reads it.
+
 ## Development
 
 ```bash
@@ -215,4 +217,4 @@ lint` before opening a pull request — `prepublishOnly` runs the same checks.
 
 ## Licence
 
-[MIT](./LICENSE)
+[MIT](https://github.com/Shivala-08/the-return-of-npm/blob/main/LICENSE)

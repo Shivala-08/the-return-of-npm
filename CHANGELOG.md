@@ -3,6 +3,20 @@
 All notable changes to this project are documented here.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.0.1] - 2026-11-18
+
+### Added
+
+- `./package.json` is exported, so tooling that reads a package manifest
+  (`require('indian-number-kit/package.json')`) no longer fails with
+  `ERR_PACKAGE_PATH_NOT_EXPORTED`.
+- `publishConfig.access` pinned to `public`.
+
+### Changed
+
+- README links are absolute, so they resolve on the npm package page as well
+  as on GitHub.
+
 ## [1.0.0] - 2026-11-18
 
 ### Added
