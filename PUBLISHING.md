@@ -11,23 +11,16 @@ npm and GitHub credentials, so they are yours to run.
 - [x] Tarball installs in a clean folder; `import` and `require` both work
 - [x] README examples replay against the packed build (38/38)
 
-## 1. Point the repository field at the real URL
+## 1. Repository metadata
 
-`package.json` currently says:
-
-```json
-"repository": { "type": "git", "url": "git+https://github.com/pallav/indian-number-kit.git" }
-```
-
-Change the owner/repo if that is not where this will live. The CI and README
-badges use the same path.
+`package.json` (`repository`, `homepage`, `bugs`) and the README badges point at
+<https://github.com/Shivala-08/the-return-of-npm>. Update all of them together
+if the repo ever moves.
 
 ## 2. Create the GitHub repo and push
 
 ```bash
-gh repo create indian-number-kit --public --source=. --remote=origin --push
-# or, without the gh CLI:
-git remote add origin git@github.com:pallav/indian-number-kit.git
+git remote add origin https://github.com/Shivala-08/the-return-of-npm.git
 git push -u origin main
 ```
 

@@ -49,7 +49,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pallav/indian-number-kit.git"
+    "url": "git+https://github.com/Shivala-08/the-return-of-npm.git"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -61,5 +61,9 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.4",
     "vitest": "^3.2.4"
+  },
+  "homepage": "https://github.com/Shivala-08/the-return-of-npm#readme",
+  "bugs": {
+    "url": "https://github.com/Shivala-08/the-return-of-npm/issues"
   }
 }

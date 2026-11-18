@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/indian-number-kit.svg)](https://www.npmjs.com/package/indian-number-kit)
 [![npm downloads](https://img.shields.io/npm/dm/indian-number-kit.svg)](https://www.npmjs.com/package/indian-number-kit)
-[![CI](https://github.com/pallav/indian-number-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/pallav/indian-number-kit/actions/workflows/ci.yml)
+[![CI](https://github.com/Shivala-08/the-return-of-npm/actions/workflows/ci.yml/badge.svg)](https://github.com/Shivala-08/the-return-of-npm/actions/workflows/ci.yml)
 [![licence](https://img.shields.io/npm/l/indian-number-kit.svg)](./LICENSE)
 [![bundle size](https://img.shields.io/badge/gzip-2.4%20kB-brightgreen.svg)](#bundle-size)
 
