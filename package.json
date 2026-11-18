@@ -1,0 +1,65 @@
+{
+  "name": "indian-number-kit",
+  "version": "1.0.0",
+  "description": "Format, convert and parse numbers in the Indian numbering system (lakh, crore).",
+  "keywords": [
+    "indian",
+    "lakh",
+    "crore",
+    "number-format",
+    "currency",
+    "rupee",
+    "number-to-words",
+    "inr",
+    "en-in"
+  ],
+  "license": "MIT",
+  "author": "Pallav",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "build:min": "tsup src/index.ts --format esm --minify --out-dir .size",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src test",
+    "format": "prettier --write .",
+    "size": "npm run build:min >/dev/null && node scripts/size.mjs",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm run coverage && npm run build",
+    "check:readme": "npm run build >/dev/null && node scripts/check-readme.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pallav/indian-number-kit.git"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^22.9.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run coverage
+      - run: npm run build
+      - run: npm run size
+      - name: Smoke test the built package (ESM + CJS)
+        run: |
+          npm pack --silent
+          mkdir -p /tmp/smoke && cd /tmp/smoke && npm init -y --silent >/dev/null
+          npm install --silent "$GITHUB_WORKSPACE"/*.tgz
+          node --input-type=module -e "import { formatIndian } from 'indian-number-kit'; if (formatIndian(1234567) !== '12,34,567') process.exit(1)"
+          node -e "const { formatIndian } = require('indian-number-kit'); if (formatIndian(1234567) !== '12,34,567') process.exit(1)"
