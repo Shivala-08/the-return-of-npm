@@ -40,12 +40,31 @@ jobs:
             exit 1
           fi
 
+      - name: Skip if this version is already on the registry
+        id: state
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if npm view "indian-number-kit@$version" version >/dev/null 2>&1; then
+            echo "indian-number-kit@$version is already published; nothing to do"
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Publish (prepublishOnly runs lint, types, tests and build)
-        run: npm publish --provenance --access public
+        if: steps.state.outputs.published == 'false'
+        run: |
+          if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
+            echo "::error::NPM_TOKEN is not set, so this version cannot be published."
+            echo "Add a granular npm token with Bypass 2FA enabled as the NPM_TOKEN secret."
+            exit 1
+          fi
+          npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Verify the registry copy
+        if: steps.state.outputs.published == 'false'
         run: |
           version="$(node -p "require('./package.json').version")"
           npm view "indian-number-kit@$version" version

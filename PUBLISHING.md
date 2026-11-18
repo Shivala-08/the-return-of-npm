@@ -1,7 +1,23 @@
 # Publishing checklist
 
-Everything below has been verified locally. The remaining steps need your
-npm and GitHub credentials, so they are yours to run.
+**Status: `indian-number-kit@1.0.0` is live on npm** (`latest`, MIT, zero
+dependencies) and installs cleanly in both ESM and CommonJS. The steps below
+are kept as the record of how it shipped and as the checklist for future
+releases.
+
+## What actually happened on the first release
+
+- `npm publish` reported success, but the registry served only a
+  `0.0.0-stage` placeholder for about two minutes while the upload was
+  processed. The version endpoint returned `404`, then `200`.
+- Re-staging during that window failed with
+  `E409 Cannot stage previously published version "1.0.0"` — the version was
+  already claimed. Wait, do not bump the version to work around it.
+- Staged-publishing commands (`npm stage list|view|approve`) need npm CLI
+  **11.15.0+**; this machine had 11.6.2, so they were run through
+  `npx npm@11.15.0`.
+- `require('indian-number-kit/package.json')` is intentionally not exported;
+  only the `.` entry point is.
 
 ## Already verified
 
@@ -29,7 +45,7 @@ git push -u origin main
 
 `origin` is configured and `main` tracks it; future pushes are just `git push`.
 
-## 3. Publish — the only step left
+## 3. Publish (done for 1.0.0, kept for the next release)
 
 Nothing in this repo can publish on its own: the npm token stored in `~/.npmrc`
 currently returns `E401 Unauthorized` (expired or revoked), and no `NPM_TOKEN`
