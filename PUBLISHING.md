@@ -40,8 +40,21 @@ is available to the agent. Pick one of the two paths below.
 `.github/workflows/release.yml` publishes when a `v*` tag is pushed, with
 provenance, and then verifies the registry copy.
 
-1. Create an npm **Automation** (or granular, publish-scoped) token at
-   <https://www.npmjs.com/settings/~/tokens>.
+1. Create a **Granular Access Token** at
+   <https://www.npmjs.com/settings/~/tokens> with exactly these settings:
+
+   | Field | Value | Why |
+   | --- | --- | --- |
+   | Packages and scopes → Permissions | **Read and write (publish and stage)** | read-only or stage-only cannot publish |
+   | Packages and scopes → Select Packages | **All packages** | a package-scoped token can only name packages that already exist, so it cannot bootstrap a new name |
+   | Bypass two-factor authentication | **ON** | without it CI gets `EOTP` / `403` because it cannot answer a 2FA prompt |
+   | Allowed IP ranges | leave empty | GitHub runner IPs change |
+
+   Only the granular type exists now; classic "Automation" tokens are gone.
+   `--provenance` still applies, so the publish remains attributable to this
+   repo and commit. Once the package exists you can move to token-free
+   publishing: npm → package → Settings → Trusted Publishers → add
+   owner `Shivala-08`, repo `the-return-of-npm`, workflow `release.yml`.
 2. Add it as a repository secret named `NPM_TOKEN`:
    ```bash
    gh secret set NPM_TOKEN --repo Shivala-08/the-return-of-npm
