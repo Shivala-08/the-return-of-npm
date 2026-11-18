@@ -5,32 +5,43 @@ npm and GitHub credentials, so they are yours to run.
 
 ## Already verified
 
-- [x] `npm view indian-number-kit` → 404, so the name is free
+- [x] `npm view indian-number-kit` → 404, the name is still free
+- [x] Repository pushed to https://github.com/Shivala-08/the-return-of-npm
+- [x] GitHub Actions CI green on Node 18, 20 and 22 (lint, types, coverage,
+      build, size budget and a tarball install smoke test)
 - [x] `npm run lint` / `typecheck` / `coverage` → clean, 100% coverage
 - [x] `npm publish --dry-run` → runs `prepublishOnly` and packs 7 files, 9.1 kB
 - [x] Tarball installs in a clean folder; `import` and `require` both work
 - [x] README examples replay against the packed build (38/38)
 
-## 1. Repository metadata
+## 1. Repository metadata — done
 
 `package.json` (`repository`, `homepage`, `bugs`) and the README badges point at
 <https://github.com/Shivala-08/the-return-of-npm>. Update all of them together
 if the repo ever moves.
 
-## 2. Create the GitHub repo and push
+## 2. Push to GitHub — done
 
 ```bash
 git remote add origin https://github.com/Shivala-08/the-return-of-npm.git
 git push -u origin main
 ```
 
-## 3. Publish
+`origin` is configured and `main` tracks it; future pushes are just `git push`.
+
+## 3. Publish — the only step left
+
+The npm CLI on this machine is not logged in (`npm whoami` returns E401), so
+this needs your credentials:
 
 ```bash
 npm login                       # 2FA prompt
 npm publish                     # prepublishOnly re-runs lint, types, tests, build
 git tag v1.0.0 && git push --tags
 ```
+
+The registry name check still passes (`npm view indian-number-kit` → 404), so
+publish soon if the name matters to you.
 
 For a scoped name, use `npm publish --access public`.
 
